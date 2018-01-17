@@ -207,12 +207,12 @@ ompl::base::PlannerStatus ompl::geometric::RRT::solve(const base::PlannerTermina
 				ik_sol = nmotion->ik_q1_active;
 
 			// Project dstate (currently not on the manifold)
-			if (!calc_specific_IK_solution_R1(T, q1, ik_sol))
+			if (!calc_specific_IK_solution_R1(q1, ik_sol))
 				continue;
 			else
 				q2 = get_IK_solution_q2();
 
-			if (collision_state(getPMatrix(), q1, q2))
+			if (collision_state(q1, q2))
 				continue;
 
 			updateStateVector(xstate, q1, q2);

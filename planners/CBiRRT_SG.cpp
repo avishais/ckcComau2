@@ -191,7 +191,7 @@ ompl::geometric::CBiRRT::Motion* ompl::geometric::CBiRRT::growTree(TreeData &tre
 			IK_counter++;
 			clock_t sT = clock();
 			// Project dstate (currently not on the manifold)
-			if (!calc_specific_IK_solution_R1(T, q1, ik_sol)) {
+			if (!calc_specific_IK_solution_R1(q1, ik_sol)) {
 				sampling_time += double(clock() - sT) / CLOCKS_PER_SEC;
 				sampling_counter[1]++;
 				return nmotion;
@@ -200,7 +200,7 @@ ompl::geometric::CBiRRT::Motion* ompl::geometric::CBiRRT::growTree(TreeData &tre
 			q2 = get_IK_solution_q2();
 			IK_time += double(clock() - sT) / CLOCKS_PER_SEC;
 
-			if (collision_state(getPMatrix(), q1, q2)) {
+			if (collision_state(q1, q2)) {
 				sampling_time += double(clock() - sT) / CLOCKS_PER_SEC;
 				sampling_counter[1]++;
 				return nmotion;
@@ -718,7 +718,7 @@ bool ompl::geometric::CBiRRT::reconstruct(Motion *m1, Motion *m2, Matrix &M) {
 		else if (m1->ik_q1_active != -2 && m2->ik_q1_active == -2)
 			ik_sol = m1->ik_q1_active;
 		
-		if (calc_specific_IK_solution_R1(getQ(), q1, ik_sol))
+		if (calc_specific_IK_solution_R1(q1, ik_sol))
 			q2 = get_IK_solution_q2();
 		else
 			return false;

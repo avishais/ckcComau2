@@ -224,7 +224,7 @@ ompl::base::PlannerStatus ompl::geometric::SBL::solve(const base::PlannerTermina
 				ik_sol = existing->ik_q1_active;
 
 			clock_t sT = clock();
-			if (!calc_specific_IK_solution_R1(T, q1, ik_sol)) {
+			if (!calc_specific_IK_solution_R1(q1, ik_sol)) {
 				sampling_time += double(clock() - sT) / CLOCKS_PER_SEC;
 				sampling_counter[1]++;
 				continue;
@@ -232,7 +232,7 @@ ompl::base::PlannerStatus ompl::geometric::SBL::solve(const base::PlannerTermina
 
 			q2 = get_IK_solution_q2();
 
-			if (collision_state(getPMatrix(), q1, q2)) {
+			if (collision_state(q1, q2)) {
 				sampling_time += double(clock() - sT) / CLOCKS_PER_SEC;
 				sampling_counter[1]++;
 				continue;

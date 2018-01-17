@@ -153,7 +153,7 @@ int collisionDetection::collision_state(State q1, State q2)
 
 	T2[0] =  22;
 	T2[1] =  0;
-	T2[2] =  300;
+	T2[2] =  0;
 
 	MRotY(Mrod,0);
 	MxM(Rrod,R6,Mrod);
@@ -336,9 +336,84 @@ int collisionDetection::collision_state(State q1, State q2)
 	// Collision with obstacles
 	if (withObs && env == 1) {
 
-		// PQP_REAL Mobs[3][3], Robs[3][3], Tobs[3];
+		PQP_REAL Mobs[3][3], Robs[3][3], Tobs[3];
 
-		// obs_max_index = i-1;
+		// Collision with obs1
+		MRotZ(Robs,0);
+
+		Tobs[0] =  0;
+		Tobs[1] =  -1200;
+		Tobs[2] =  -400;
+
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R4,T4,&link4,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R5,T5,&link5,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R6,T6,&link6,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R42,T42,&link42,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R52,T52,&link52,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R62,T62,&link62,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,Rrod,Trod,&rod,tolerance); i++;
+
+		// Collision with obs1
+		MRotZ(Robs,0);
+
+		Tobs[0] =  0;
+		Tobs[1] =  1200;
+		Tobs[2] =  -400;
+
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R4,T4,&link4,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R5,T5,&link5,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R6,T6,&link6,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R42,T42,&link42,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R52,T52,&link52,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R62,T62,&link62,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,Rrod,Trod,&rod,tolerance); i++;
+
+		// Collision with obs1
+		MRotZ(Robs,0);
+
+		Tobs[0] =  0;
+		Tobs[1] =  0;
+		Tobs[2] =  1000;
+
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs1,R4,T4,&link4,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs1,R5,T5,&link5,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs1,R6,T6,&link6,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs1,R42,T42,&link42,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs1,R52,T52,&link52,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs1,R62,T62,&link62,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs1,Rrod,Trod,&rod,tolerance); i++;
+
+		// Collision with obs2
+		MRotZ(Robs,0);
+
+		Tobs[0] =  800;
+		Tobs[1] =  0;
+		Tobs[2] =  0;
+
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R4,T4,&link4,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R5,T5,&link5,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R6,T6,&link6,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R42,T42,&link42,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R52,T52,&link52,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R62,T62,&link62,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,Rrod,Trod,&rod,tolerance); i++;
+
+		// Collision with obs2
+		MRotZ(Robs,0);
+
+		Tobs[0] =  -800;
+		Tobs[1] =  0;
+		Tobs[2] =  0;
+
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R4,T4,&link4,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R5,T5,&link5,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R6,T6,&link6,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R42,T42,&link42,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R52,T52,&link52,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,R62,T62,&link62,tolerance); i++;
+		PQP_Tolerance(&res[i],Robs,Tobs,&obs2,Rrod,Trod,&rod,tolerance); i++;
+
+		obs_max_index = i-1;
 	}
 
 	clock_t end = clock();
@@ -718,6 +793,46 @@ void collisionDetection::load_models(){
 				collisionDetection::rod.AddTri(p1,p2,p3,i);
 			}
 			collisionDetection::rod.EndModel();
+			fclose(fp);
+
+			// initialize obs
+			fp = fopen(CADLINK "obs.tris","r");
+			if (fp == NULL) { fprintf(stderr,"Couldn't open obs.tris\n"); exit(-1); }
+			fscanf(fp,"%d",&ntris);
+
+			collisionDetection::obs1.BeginModel();
+			for (i = 0; i < ntris; i++)
+			{
+				double p1x,p1y,p1z,p2x,p2y,p2z,p3x,p3y,p3z;
+				fscanf(fp,"%lf %lf %lf %lf %lf %lf %lf %lf %lf",
+						&p1x,&p1y,&p1z,&p2x,&p2y,&p2z,&p3x,&p3y,&p3z);
+				PQP_REAL p1[3],p2[3],p3[3];
+				p1[0] = (PQP_REAL)p1x; p1[1] = (PQP_REAL)p1y; p1[2] = (PQP_REAL)p1z;
+				p2[0] = (PQP_REAL)p2x; p2[1] = (PQP_REAL)p2y; p2[2] = (PQP_REAL)p2z;
+				p3[0] = (PQP_REAL)p3x; p3[1] = (PQP_REAL)p3y; p3[2] = (PQP_REAL)p3z;
+				collisionDetection::obs1.AddTri(p1,p2,p3,i);
+			}
+			collisionDetection::obs1.EndModel();
+			fclose(fp);
+
+			// initialize obs2
+			fp = fopen(CADLINK "obs1.tris","r");
+			if (fp == NULL) { fprintf(stderr,"Couldn't open obs1.tris\n"); exit(-1); }
+			fscanf(fp,"%d",&ntris);
+
+			collisionDetection::obs2.BeginModel();
+			for (i = 0; i < ntris; i++)
+			{
+				double p1x,p1y,p1z,p2x,p2y,p2z,p3x,p3y,p3z;
+				fscanf(fp,"%lf %lf %lf %lf %lf %lf %lf %lf %lf",
+						&p1x,&p1y,&p1z,&p2x,&p2y,&p2z,&p3x,&p3y,&p3z);
+				PQP_REAL p1[3],p2[3],p3[3];
+				p1[0] = (PQP_REAL)p1x; p1[1] = (PQP_REAL)p1y; p1[2] = (PQP_REAL)p1z;
+				p2[0] = (PQP_REAL)p2x; p2[1] = (PQP_REAL)p2y; p2[2] = (PQP_REAL)p2z;
+				p3[0] = (PQP_REAL)p3x; p3[1] = (PQP_REAL)p3y; p3[2] = (PQP_REAL)p3z;
+				collisionDetection::obs2.AddTri(p1,p2,p3,i);
+			}
+			collisionDetection::obs2.EndModel();
 			fclose(fp);
 
 		}

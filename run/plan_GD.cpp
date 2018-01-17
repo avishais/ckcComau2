@@ -246,6 +246,8 @@ int main(int argn, char ** args) {
 
 	State c_start, c_goal;
 	if (env == 1) {
+		c_start = {-0.59, 1.48, -1.57, -1.36, -0.4, 0, 1.0144, 0.504505, -0.149664, 1.6056, -1.17541, 0.157832};
+		c_goal = {0.56, 0.83, -0.55, -1.36, 0.5, 0, -0.786965, 0.642824, 0.316891, 2.37455, 1.48212, -1.18054};
 		Plan.set_environment(1);
 	}
 	else if (env == 2) {
@@ -253,29 +255,32 @@ int main(int argn, char ** args) {
 		Plan.set_environment(2);
 	}
 
-	int mode = 1;
+	int mode = 2;
 	switch (mode) {
 	case 1: {
-		StateValidityChecker svc(1);
+		// StateValidityChecker svc(1);
+		// State q = {-0.578456, 0.928206, -1.43931, -1.84579, -0.885016, 1.98275, 0.474392, 0.14254, -0.469511, -0.434606, 0.496151, 0.563653};
+		// cout << svc.collision_state(q) << endl;
 		
-		while (1) {
-			State c_start = svc.sample_q();
-			State c_goal = svc.sample_q();
+		// while (1) {
+		// 	State c_start = svc.sample_q();
+		// 	State c_goal = svc.sample_q();
 			
-			Plan.plan(c_start, c_goal, runtime, ptype, 1.5);
-			if (Plan.solved_bool)
-				break;
-		}
+			Plan.plan(c_start, c_goal, runtime, ptype, 0.5);
+		// 	if (Plan.solved_bool)
+		// 		break;
+		// }
 
 		break;
 	}
 	case 2 : { // Benchmark planning time with constant maximum step size
 		ofstream GD;
-		GD.open("./matlab/Benchmark_" + plannerName + "_GD2.txt", ios::app);
+		GD.open("./matlab/Benchmark_" + plannerName + "_GD.txt", ios::app);
 
-		for (int k = 0; k < 500; k++) {
-			Plan.plan(c_start, c_goal, runtime, ptype, 0.6); // CBiRRT
-			//Plan.plan(c_start, c_goal, runtime, ptype, 0.6); // SBL
+		for (int k = 0; k < 100; k++) {
+			// Plan.plan(c_start, c_goal, runtime, ptype, 1.4); // CBiRRT
+			// Plan.plan(c_start, c_goal, runtime, ptype, 1.0); // SBL
+			Plan.plan(c_start, c_goal, runtime, ptype, 1.8); // RRT
 
 			// Extract from perf file
 			ifstream FromFile;
@@ -294,10 +299,10 @@ int main(int argn, char ** args) {
 		if (env == 1)
 			GD.open("./matlab/Benchmark_" + plannerName + "_GD_rB.txt", ios::app);
 
-			for (int k = 0; k < 20; k++) {
+			for (int k = 0; k < 10; k++) {
 
-			for (int j = 0; j < 6; j++) {
-				double maxStep = 0.2 + 0.4*j;
+			for (int j = 0; j < 4; j++) {
+				double maxStep = 1.0 + 0.4*j;
 
 				cout << "** Running GD iteration " << k << " with maximum step: " << maxStep << " **" << endl;
 

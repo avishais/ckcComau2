@@ -57,16 +57,6 @@ ob::PlannerPtr plan_C::allocatePlanner(ob::SpaceInformationPtr si, plannerType p
 		return std::make_shared<og::RRT>(si, maxStep, env);
 		break;
 	}
-	case PLANNER_LAZYRRT:
-	{
-		return std::make_shared<og::LazyRRT>(si, maxStep, env);
-		break;
-	}
-	/*case PLANNER_PRM:
-	{
-		return std::make_shared<og::PRM>(si, env);
-		break;
-	}*/
 	case PLANNER_SBL:
 	{
 		return std::make_shared<og::SBL>(si, maxStep, env);
@@ -88,30 +78,30 @@ void plan_C::plan(State c_start, State c_goal, double runtime, plannerType ptype
 
 	// set the bounds for the Q=R^12 part of 'Cspace'
 	ob::RealVectorBounds Qbounds(12);
-	Qbounds.setLow(0, -2.88); // Robot 1
-	Qbounds.setHigh(0, 2.88);
-	Qbounds.setLow(1, -1.919);
-	Qbounds.setHigh(1, 1.919);
-	Qbounds.setLow(2, -1.919);
-	Qbounds.setHigh(2, 1.22);
-	Qbounds.setLow(3, -2.79);
-	Qbounds.setHigh(3, 2.79);
-	Qbounds.setLow(4, -2.09);
-	Qbounds.setHigh(4, 2.09);
-	Qbounds.setLow(5, -PI_);// -6.98); // Should be -6.98 but currently the IK won't allow it - this impacts the sampler
-	Qbounds.setHigh(5, PI_);// 6.98); // Should be 6.98 but currently the IK won't allow it
-	Qbounds.setLow(6, -2.88); // Robot 2
-	Qbounds.setHigh(6, 2.88);
-	Qbounds.setLow(7, -1.919);
-	Qbounds.setHigh(7, 1.919);
-	Qbounds.setLow(8, -1.919);
-	Qbounds.setHigh(8, 1.22);
-	Qbounds.setLow(9, -2.79);
-	Qbounds.setHigh(9, 2.79);
-	Qbounds.setLow(10, -2.09);
-	Qbounds.setHigh(10, 2.09);
-	Qbounds.setLow(11, -PI_);// -6.98); // Should be -6.98 but currently the IK won't allow it
-	Qbounds.setHigh(11, PI_);// 6.98); // Should be 6.98 but currently the IK won't allow it
+	Qbounds.setLow(0, -PI_); // Robot 1
+	Qbounds.setHigh(0, PI_);
+	Qbounds.setLow(1, -1.0472);
+	Qbounds.setHigh(1, 2.1871);
+	Qbounds.setLow(2, -PI_/2);
+	Qbounds.setHigh(2, 1.3090);
+	Qbounds.setLow(3, -PI_);
+	Qbounds.setHigh(3, PI_);
+	Qbounds.setLow(4, -2.0944);
+	Qbounds.setHigh(4, 2.0944);
+	Qbounds.setLow(5, -PI_);
+	Qbounds.setHigh(5, PI_);
+	Qbounds.setLow(6, -PI_); // Robot 2
+	Qbounds.setHigh(6, PI_);
+	Qbounds.setLow(7, -1.0472);
+	Qbounds.setHigh(7, 2.1871);
+	Qbounds.setLow(8, -PI_/2);
+	Qbounds.setHigh(8, 1.3090);
+	Qbounds.setLow(9, -PI_);
+	Qbounds.setHigh(9, PI_);
+	Qbounds.setLow(10, -2.0944);
+	Qbounds.setHigh(10, 2.0944);
+	Qbounds.setLow(11, -PI_);
+	Qbounds.setHigh(11, PI_);
 
 	// set the bound for the compound space
 	Q->as<ob::RealVectorStateSpace>()->setBounds(Qbounds);
@@ -218,11 +208,13 @@ int main(int argn, char ** args) {
 	if (argn == 1) {
 		runtime = 1; // sec
 		ptype = PLANNER_BIRRT;
+		plannerName = "BiRRT";		
 		env = 1;
 	}
 	else if (argn == 2) {
 		runtime = atof(args[1]);
 		ptype = PLANNER_BIRRT;
+		plannerName = "BiRRT";		
 		env = 1;
 	}
 	else if (argn > 2) {
@@ -237,14 +229,6 @@ int main(int argn, char ** args) {
 			plannerName = "RRT";
 			break;
 		case 3 :
-			ptype = PLANNER_LAZYRRT;
-			plannerName = "LazyRRT";
-			break;
-		case 4 :
-			ptype = PLANNER_PRM;
-			plannerName = "PRM";
-			break;
-		case 5 :
 			ptype = PLANNER_SBL;
 			plannerName = "SBL";
 			break;
@@ -264,18 +248,15 @@ int main(int argn, char ** args) {
 
 	State c_start, c_goal;
 	if (env == 1) {
-		c_start = {0.5236, 1.7453, -1.8326, -1.4835,	1.5708,	0, 1.004278, 0.2729, 0.9486, -1.15011, 1.81001, -1.97739};
-		//State c_goal = {0.5236, 0.34907, 0.69813, -1.3963, 1.5708, 0, -2.432, -1.4148, -1.7061, -1.6701, -1.905, 1.0015}; // Robot 2 backfilp - Elbow down
-		c_goal = {0.5236, 0.34907, 0.69813, -1.3963, 1.5708, 0, 0.7096, 1.8032, -1.7061, -1.6286, 1.9143, -2.0155}; // Robot 2 no backflip - Elbow down
+		c_start = {-0.59, 1.48, -1.57, -1.36, -0.4, 0, 1.0144, 0.504505, -0.149664, 1.6056, -1.17541, 0.157832};
+		c_goal = {0.56, 0.83, -0.55, -1.36, 0.5, 0, -0.786965, 0.642824, 0.316891, 2.37455, 1.48212, -1.18054};
 		Plan.set_environment(1);
 	}
 	else if (env == 2) {
-		c_start = {1.1, 1.1, 0, 1.24, -1.5708, 0, -0.79567, 0.60136, 0.43858, -0.74986, -1.0074, -0.092294};
-		c_goal = {-1.1, 1.35, -0.2, -1, -1.9, 0, 0.80875, 0.72363, -0.47891, -1.0484, 0.73278, 1.7491};
 		Plan.set_environment(2);
 	}
 
-	int mode = 2;
+	int mode = 1;
 	switch (mode) {
 	case 1: {
 		Plan.plan(c_start, c_goal, runtime, ptype, 0.6);
@@ -285,15 +266,15 @@ int main(int argn, char ** args) {
 	case 2 : { // Benchmark planning time with constant maximum step size
 
 		ofstream APS;
-		APS.open("/home/avishai/Downloads/omplapp/ompl/Workspace/ckc3d/matlab/profile/profile_" + plannerName + "_SG_env2.txt", ios::app);
-
+		APS.open("./matlab/Benchmark_" + plannerName + "_PCS.txt", ios::app);
+		
 		for (int k = 0; k < 100; k++) {
 			Plan.plan(c_start, c_goal, runtime, ptype, 0.8); // CBiRRT
 			//Plan.plan(c_start, c_goal, runtime, ptype, 0.4); // SBL
 
 			// Extract from perf file
 			ifstream FromFile;
-			FromFile.open("/home/avishai/Downloads/omplapp/ompl/Workspace/ckc3d/paths/perf_log.txt");
+			FromFile.open("./paths/perf_log.txt");
 			string line;
 			while (getline(FromFile, line))
 				APS << line << "\t";
@@ -306,9 +287,7 @@ int main(int argn, char ** args) {
 	case 3 : { // Benchmark maximum step size while benchmarking the step size
 		ofstream APS;
 		if (env == 1)
-			APS.open("/home/avishai/Downloads/omplapp/ompl/Workspace/ckc3d/matlab/Benchmark_" + plannerName + "_SG_3poles_rB.txt", ios::app);
-		else if (env == 2)
-			APS.open("/home/avishai/Downloads/omplapp/ompl/Workspace/ckc3d/matlab/env2/Benchmark_" + plannerName + "_SG_3poles_rB.txt", ios::app);
+			APS.open("./matlab/Benchmark_" + plannerName + "_SG_3poles_rB.txt", ios::app);
 
 		int N = 100;
 		for (int k = 0; k < N; k++) {
@@ -323,7 +302,7 @@ int main(int argn, char ** args) {
 
 				// Extract from perf file
 				ifstream FromFile;
-				FromFile.open("/home/avishai/Downloads/omplapp/ompl/Workspace/ckc3d/paths/perf_log.txt");
+				FromFile.open("./paths/perf_log.txt");
 				string line;
 				while (getline(FromFile, line))
 					APS << line << "\t";
