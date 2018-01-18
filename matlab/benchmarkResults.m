@@ -16,7 +16,7 @@ switch plannerType
         D{2} = D{2}(D{2}(:,2)==1,:); 
     case 'RRT'
         D{1} = load('Benchmark_RRT_PCS.txt'); 
-        D{2} = load('Benchmark_RRT_PCS.txt');
+        D{2} = load('Benchmark_RRT_GD.txt');
         D{1} = [1.4*ones(size(D{1},1),1) D{1}];
         D{2} = [1.8*ones(size(D{2},1),1) D{2}];
         D{1} = D{1}(D{1}(:,2)==1,:); 

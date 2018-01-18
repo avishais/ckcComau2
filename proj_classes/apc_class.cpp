@@ -426,9 +426,12 @@ bool two_robots::IsRobotsFeasible_R2(State q) {
 	// T - Trans. matrix for the end of the rod while its start is in the origin
 	// q - angles of robot 2.
 
+	Matrix Tinv = Q;
+	InvertMatrix(Q, Tinv); // Invert matrix
+
 	FKsolve_rob(q, 2);
 	T1 = MatricesMult(get_FK_solution_T2(), {{-1, 0, 0, 0}, {0, -1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}); // Returns the opposing required matrix of the rods tip at robot 2
-	T1 = MatricesMult(T1, Q); // Returns the REQUIRED matrix of the rods tip at rob
+	T1 = MatricesMult(T1, Tinv); // Returns the REQUIRED matrix of the rods tip at rob
 
 	countSolutions = calc_all_IK_solutions_1(T1);
 	if (countSolutions >= 1)

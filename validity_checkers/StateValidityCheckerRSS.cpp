@@ -278,8 +278,6 @@ bool StateValidityChecker::sampleSingular(ob::State* state)
 		q2_add = {0,0,-PI_/2,0,0,0};
 	}
 
-	Matrix Q = getQ();
-
 	do {
 		// Random active chain
 		for (int i = 0; i < 6; i++) {
@@ -290,9 +288,7 @@ bool StateValidityChecker::sampleSingular(ob::State* state)
 			q2[i] = q2[i]*q2_mode[i]+q2_add[i];
 		}
 
-		Matrix Qinv = Q;
-		InvertMatrix(Q, Qinv); // Invert matrix
-		if (IsRobotsFeasible_R2(Qinv, q2)) {
+		if (IsRobotsFeasible_R2(q2)) {
 
 			sol_R2 = rand() % get_countSolutions(); //rng_.uniformInt(0, get_countSolutions()-1);
 			q1 = get_all_IK_solutions_1(sol_R2);
@@ -302,7 +298,7 @@ bool StateValidityChecker::sampleSingular(ob::State* state)
 			if (ik[1] == -1)
 				continue;
 
-			if (!collision_state(q1, q2) && checkEE(q1, q2))
+			// if (!collision_state(q1, q2) && checkEE(q1, q2))
 				valid = true;
 		}
 	} while (!valid);
@@ -618,7 +614,7 @@ bool StateValidityChecker::checkMotionRBS(State qa1, State qa2, State qb1, State
 	if (!isValidRBS(q1, q2, active_chain, ik_sol)) // Also updates s_mid with the projected value
 		return false;
 
-	if (normDistanceDuo(q1, q2, qsg1, qsg2) < 15*RBS_tol)
+	if (normDistanceDuo(q1, q2, qsg1, qsg2) < 7*RBS_tol)
 		return true;
 
 	//if ( normDistanceDuo(qa1, qa2, q1, q2) > d || normDistanceDuo(q1, q2, qb1, qb2) > d )
@@ -741,7 +737,7 @@ bool StateValidityChecker::reconstructRBS(State qa1, State qa2, State qb1, State
 	if (!isValidRBS(q1, q2, active_chain, ik_sol)) // Also updates s_mid with the projected value
 		return false; // Not suppose to happen since we run this function only when local connection feasibility is known
 
-	if (normDistanceDuo(q1, q2, qsg1, qsg2) < 15*RBS_tol)
+	if (normDistanceDuo(q1, q2, qsg1, qsg2) < 7*RBS_tol)
 		return true;
 
 	if (firstORsecond==1)
