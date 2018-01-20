@@ -93,6 +93,7 @@ public:
 	void clearMatrix(Matrix &);
 	double normDistance(State, State);
 	void log_q(State);
+	State rand_q_ambient();
 
 	Matrix Q;
 	Matrix getQ() {

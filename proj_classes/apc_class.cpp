@@ -655,5 +655,25 @@ void two_robots::log_q(State q) {
 	myfile.close();
 }
 
+State two_robots::rand_q_ambient() {
+	State q(12);
+
+	q[0] = (double)rand() / RAND_MAX * 2*q1minmax - q1minmax;
+	q[1] = (double)rand() / RAND_MAX * (q2max-q2min) + q2min;
+	q[2] = (double)rand() / RAND_MAX * (q3max-q3min) + q3min;
+	q[3] = (double)rand() / RAND_MAX * 2*PI_ - PI_;
+	q[4] = (double)rand() / RAND_MAX * 2*q5minmax - q5minmax;
+	q[5] = (double)rand() / RAND_MAX * 2*PI_ - PI_;
+
+	q[6] = (double)rand() / RAND_MAX * 2*q1minmax - q1minmax;
+	q[7] = (double)rand() / RAND_MAX * (q2max-q2min) + q2min;
+	q[8] = (double)rand() / RAND_MAX * (q3max-q3min) + q3min;
+	q[9] = (double)rand() / RAND_MAX * 2*PI_ - PI_;
+	q[10] = (double)rand() / RAND_MAX * 2*q5minmax - q5minmax;
+	q[11] = (double)rand() / RAND_MAX * 2*PI_ - PI_;
+
+	return q;
+}
+
 
 // ==================================

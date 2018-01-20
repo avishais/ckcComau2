@@ -26,7 +26,7 @@ int main() {
 	State q1(n), q2(n), q1a(n/2), q1b(n/2), q2a(n/2), q2b(n/2);
 
 	std::ofstream f;
-	f.open("./results/pcs_rbs_verification_withObs3.txt", ios::app); //_env2_distMix
+	f.open("./results/pcs_rbs_verification_woObs.txt", ios::app); 
 
 	int N = 0.5e5, i = 0;
 	while (i < N) {
@@ -36,7 +36,7 @@ int main() {
 
 		int active_chain;
 		if (1){//rand()%2==0) {
-			double s = fRand(0.01, 1);
+			double s = fRand(0.01, 0.5);
 			for (int j = 0; j < n; j++)
 				q2[j] = q1[j] + s * (fRand(-PI_, PI_)-q1[j]);
 

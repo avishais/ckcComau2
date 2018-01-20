@@ -28,16 +28,20 @@ CPPAPC = ${INC_CLASSES}apc_class.cpp ${INC_VALIDITY}StateValidityCheckerPCS.cpp
 CPPAPC2 = ${INC_CLASSES}apc_class.cpp 
 CPPGD = ${INC_CLASSES}kdl_class.cpp ${INC_VALIDITY}StateValidityCheckerGD.cpp
 CPPRX = ${INC_CLASSES}kdl_class.cpp ${INC_VALIDITY}StateValidityCheckerRX.cpp
+CPPSMP = ${INC_CLASSES}kdl_class.cpp ${INC_CLASSES}apc_class.cpp
 
 CPP_P_PCS = ${INC_RUN}plan_PCS.cpp ${INC_PLANNERS}CBiRRT_PCS.cpp
 
 all:
 	#$(CXX) test_gd_kdl.cpp ${CPPGD} -o gen $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11	
 	#$(CXX) test_gd_kdl_svc.cpp ${CPPGD} ${CPPPQP} -o gen $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11	
-	$(CXX) tune_apc.cpp ${CPPAPC2} -o tu $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
+	#$(CXX) tune_apc.cpp ${CPPAPC2} -o tu $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
 	#$(CXX) test_apc_svc.cpp ${CPPAPC} ${CPPPQP} -o gen $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
 	#$(CXX) test_rbs_gd.cpp ${CPPGD} ${CPPPQP} -o rbs $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11	
-	#$(CXX) test_rbs_pcs.cpp ${CPPAPC} ${CPPPQP} -o rbspcs $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
+	$(CXX) test_rbs_pcs.cpp ${CPPAPC} ${CPPPQP} -o rbspcs $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
+	#$(CXX) test_rbs_rss.cpp ${CPPAPC} ${CPPPQP} -o rbsrss $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
+
+	#$(CXX) gen_samples.cpp ${CPPSMP} ${CPPPQP} -o gen $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11	
 
 
 

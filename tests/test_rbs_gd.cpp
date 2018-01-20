@@ -26,9 +26,9 @@ int main() {
 	State q1(n), q2(n);
 
 	std::ofstream f;
-	f.open("./results/gd_rbs_verification_withObs.txt", ios::app);
+	f.open("./results/gd_rbs_verification_woObs.txt", ios::app);
 
-	int N = 48497, i = 0;
+	int N = 0.5e5, i = 0;
 	while (i < N) {
 		cout << "Completed " << (double)i/N*100 << "%%\n";
 
@@ -37,7 +37,7 @@ int main() {
 		if (q1[0]==-1000)
 			continue;
 
-		if (0){//rand()%2==0) {
+		if (1){//rand()%2==0) {
 			double s = fRand(0.01, 1);
 			for (int j = 0; j < n; j++)
 				q2[j] = q1[j] + s * (fRand(-PI, PI)-q1[j]);

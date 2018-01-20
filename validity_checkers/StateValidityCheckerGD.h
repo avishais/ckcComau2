@@ -167,7 +167,7 @@ private:
 	State q_prev;
 
 	double dq = 0.05; // Serial local connection resolution
-	bool withObs = true; // Include obstacles?
+	bool withObs = false; // Include obstacles?
 	double RBS_tol = 0.05; // RBS local connection resolution
 	int RBS_max_depth = 150; // Maximum RBS recursion depth
 	int n = 12; // Dimension of system
