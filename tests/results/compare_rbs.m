@@ -1,16 +1,16 @@
 clear all
 clc
 
-% Dgd = load('gd_rbs_verification_withObs.txt');
-% Dpcs = [load('pcs_rbs_verification_withObs.txt'); 
-%     load('pcs_rbs_verification_withObs2.txt')]; 
-% Drss = [load('rss_rbs_verification_withObs.txt');
-%     load('rss_rbs_verification_withObs1.txt')];
-
-Dgd = load('gd_rbs_verification_woObs.txt');
-Dpcs = load('pcs_rbs_verification_woObs.txt'); 
+Dgd = load('gd_rbs_verification_withObs.txt');
+Dpcs = [load('pcs_rbs_verification_withObs.txt'); 
+    load('pcs_rbs_verification_withObs2.txt')]; 
 Drss = [load('rss_rbs_verification_withObs.txt');
     load('rss_rbs_verification_withObs1.txt')];
+
+% Dgd = load('gd_rbs_verification_woObs.txt');
+% Dpcs = load('pcs_rbs_verification_woObs.txt'); 
+% Drss = [load('rss_rbs_verification_withObs.txt');
+%     load('rss_rbs_verification_withObs1.txt')];
 
 
 clear Vgd Vpcs Vrss Vrlx

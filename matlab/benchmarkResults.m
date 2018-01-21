@@ -27,8 +27,10 @@ switch plannerType
     case 'SBL'
         D{1} = load('Benchmark_SBL_PCS.txt'); 
         D{2} = load('Benchmark_SBL_GD.txt');
+        D{3} = load('Benchmark_SBL_SG.txt');
         D{1} = [0.6*ones(size(D{1},1),1) D{1}];
         D{2} = [0.6*ones(size(D{2},1),1) D{2}];
+        D{3} = [0.6*ones(size(D{2},1),1) D{2}];
         D{1} = D{1}(D{1}(:,2)==1,:); 
         D{2} = D{2}(D{2}(:,2)==1,:); 
 
