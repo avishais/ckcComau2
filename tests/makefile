@@ -37,8 +37,8 @@ all:
 	#$(CXX) test_gd_kdl_svc.cpp ${CPPGD} ${CPPPQP} -o gen $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11	
 	#$(CXX) tune_apc.cpp ${CPPAPC2} -o tu $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
 	#$(CXX) test_apc_svc.cpp ${CPPAPC} ${CPPPQP} -o gen $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
-	#$(CXX) test_rbs_gd.cpp ${CPPGD} ${CPPPQP} -o rbs $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11	
-	$(CXX) test_rbs_pcs.cpp ${CPPAPC} ${CPPPQP} -o rbspcs $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
+	$(CXX) test_rbs_gd_d.cpp ${CPPGD} ${CPPPQP} -o rbs $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11	
+	$(CXX) test_rbs_pcs_d.cpp ${CPPAPC} ${CPPPQP} -o rbspcs $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
 	#$(CXX) test_rbs_rss.cpp ${CPPAPC} ${CPPPQP} -o rbsrss $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11
 
 	#$(CXX) gen_samples.cpp ${CPPSMP} ${CPPPQP} -o gen $(CXXFLAGS) $(LDFLAGS) -DPGD -std=c++11	

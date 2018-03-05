@@ -8,7 +8,7 @@ clc
 d = 2.8;
 %%
 planners = {'BiRRT','RRT','SBL'};
-plannerType = planners{3};
+plannerType = planners{2};
 switch plannerType
     case 'BiRRT'
         D{1} = load('Benchmark_BiRRT_PCS_rB.txt'); D{1} = D{1}(D{1}(:,2)==1,:); 
@@ -17,7 +17,7 @@ switch plannerType
     case 'RRT'
         D{1} = load('Benchmark_RRT_PCS_rB.txt'); D{1} = D{1}(D{1}(:,2)==1,:); 
         D{2} = load('Benchmark_RRT_GD_rB.txt'); D{2} = D{2}(D{2}(:,2)==1,:); 
-        D{3} = load('Benchmark_RRT_SG_rB.txt'); D{3} = D{3}(D{3}(:,2)==1,:);
+        D{3} = load('Benchmark_RRT_GD_rB.txt'); D{3} = D{3}(D{3}(:,2)==1,:);
     case 'SBL'
         D{1} = load('Benchmark_SBL_PCS_rB.txt'); D{1} = D{1}(D{1}(:,2)==1,:); 
         D{2} = load('Benchmark_SBL_GD_rB.txt'); D{2} = D{2}(D{2}(:,2)==1,:); 
