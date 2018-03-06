@@ -1,6 +1,6 @@
 #include "collisionDetection.h"
 
-#define CADLINK "../simulator/"
+#define CADLINK "./simulator/"
 
 
 void pm(PQP_REAL M[][3], std::string str) {
